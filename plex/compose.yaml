@@ -1,0 +1,22 @@
+name: plex
+
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${GUID:-1000}
+      - TZ=${TZ:-America/New_York}
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM} # optional
+    volumes:
+      - ${PATH_CONFIG}:/config
+      - ${PATH_MOVIES}:/movies
+      - ${PATH_TV}:/tv
+      - ${PATH_MUSIC}:/music
+      - ${PATH_PHOTOS}:/photos
+    devices:
+      - /dev/dri:/dev/dri # for hardware acceleration
