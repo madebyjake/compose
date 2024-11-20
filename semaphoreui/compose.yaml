@@ -1,0 +1,21 @@
+services:
+    semaphore:
+        image: semaphoreui/semaphore:v2.10.35
+        container_name: semaphore
+        restart: unless-stopped
+        environment:
+            SEMAPHORE_DB_DIALECT: bolt
+            SEMAPHORE_ADMIN: ${SEMAPHORE_ADMIN}
+            SEMAPHORE_ADMIN_PASSWORD: ${SEMAPHORE_ADMIN_PASSWORD}
+            SEMAPHORE_ADMIN_NAME: ${SEMAPHORE_ADMIN_NAME}
+            SEMAPHORE_ADMIN_EMAIL: ${SEMAPHORE_ADMIN_EMAIL}
+        ports:
+            - 3000:3000
+        volumes:
+            - app_data:/var/lib/semaphore
+            - app_config:/etc/semaphore
+            - app_tmp:/tmp/semaphore
+volumes:
+    app_data:
+    app_config:
+    app_tmp:
