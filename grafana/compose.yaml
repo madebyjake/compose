@@ -1,0 +1,17 @@
+name: grafana
+
+services:
+   grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    ports:
+      - '3000:3000'
+    volumes:
+      - app_data:/var/lib/grafana
+
+volumes:
+  app_data:
