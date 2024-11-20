@@ -1,14 +1,12 @@
-name: myspeed
-
 services:
   myspeed:
     image: germannewsmaker/myspeed
     container_name: myspeed
+    restart: unless-stopped
     ports:
       - "5216:5216"
     volumes:
-      - myspeed:/myspeed/data
-    restart: unless-stopped
+      - app_data:/myspeed/data
 
 volumes:
-  myspeed:
+  app_data:

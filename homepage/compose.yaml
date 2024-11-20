@@ -1,16 +1,14 @@
-name: homepage
-
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
-    ports:
-      - "3000:3000"
+    restart: unless-stopped
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=${TZ:-America/New_York}
+    ports:
+      - "3000:3000"
     volumes:
-      - ${PATH_CONFIG}:/app/config
+      - ${CONFIG_PATH}:/app/config
       - /var/run/docker.sock:/var/run/docker.sock # (optional) for local docker
-    restart: unless-stopped

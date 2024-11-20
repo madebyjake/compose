@@ -1,5 +1,3 @@
-name: plex
-
 services:
   plex:
     image: lscr.io/linuxserver/plex:latest
@@ -13,10 +11,10 @@ services:
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM} # optional
     volumes:
-      - ${PATH_CONFIG}:/config
-      - ${PATH_MOVIES}:/movies
-      - ${PATH_TV}:/tv
-      - ${PATH_MUSIC}:/music
-      - ${PATH_PHOTOS}:/photos
+      - ${CONFIG_PATH}:/config
+      - ${MOVIES_PATH}:/movies
+      - ${TV_PATH}:/tv
+      - ${MUSIC_PATH}:/music
+      - ${PHOTOS_PATH}:/photos
     devices:
       - /dev/dri:/dev/dri # for hardware acceleration

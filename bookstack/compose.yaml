@@ -1,9 +1,8 @@
-name: bookstack
-
 services:
   bookstack:
     image: lscr.io/linuxserver/bookstack:latest
     container_name: bookstack
+    restart: unless-stopped
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -16,22 +15,23 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
       - QUEUE_CONNECTION=${QUEUE_CONNECTION} # optional
-    volumes:
-      - ${PATH_CONFIG}:/config
     ports:
       - 6875:80
-    restart: unless-stopped
+    volumes:
+      - ${CONFIG_PATH}:/config
+    depends_on:
+      - bookstack-db
 
   bookstack-db:
-    image: mysql:${MYSQL_VERSION}
+    image: mysql:8.0
     container_name: bookstack-db
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - ${PATH_DB}:/var/lib/mysql
     ports:
       - 3306:3306
-    restart: unless-stopped
+    volumes:
+      - ${DATABASE_PATH}:/var/lib/mysql
